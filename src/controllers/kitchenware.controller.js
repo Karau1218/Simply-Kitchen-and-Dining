@@ -3,10 +3,29 @@ import { getAllProducts, getProductById } from "../services/kitchenware.service.
 export function showHome(req, res) {
     return res.render("page");
 }
+// ApI controller
+export async function getApiProducts(req, res) {
+  try {
+    const { category, search, minPrice, maxPrice, sort } = req.query;
+
+    const products = await getAllProducts({
+      category,
+      search,
+      minPrice,
+      maxPrice,
+      sort
+    });
+
+    return res.status(200).json(products);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "API Database error" });
+  }
+}
 
 export async function showProducts(req, res) {
   try {
-    const products = await getAllProducts();
+    const products = await getAllProducts(); // still works
     return res.render("products", { products });
   } catch (err) {
     console.error(err);
@@ -14,16 +33,7 @@ export async function showProducts(req, res) {
   }
 }
 
-//for fetch
-export async function getApiProducts(req, res) {
-    try {
-        const { category, search } = req.query;
-        const products = await getAllProducts(category, search);
-        return res.json(products);
-    } catch (err) {
-        return res.status(500).json({ error: "API Database error" });
-    }
-}
+
 
 export async function showProductDetail(req, res) {
   try {

@@ -1,33 +1,45 @@
+// services/kitchenware.service.js
 import db from "../db.js";
 
-// handle optional filtering and searching
-export async function getAllProducts(category = 'All', search = '') {
-    try {
-        let query = "SELECT * FROM products WHERE 1=1";
-        let params = [];
+export async function getAllProducts({
+  category = "All",
+  search = "",
+  minPrice,
+  maxPrice,
+  sort
+} = {}) {
+  let query = `
+    SELECT productId, productName, productDescription, price, category, imageUrl
+    FROM products
+    WHERE 1=1
+  `;
+  const params = [];
 
-        if (category && category !== 'All') {
-            query += " AND category = ?";
-            params.push(category);
-        }
+  if (category && category !== "All") {
+    query += " AND category = ?";
+    params.push(category);
+  }
 
-        if (search) {
-            query += " AND (productName LIKE ? OR productDescription LIKE ?)";
-            params.push(`%${search}%`, `%${search}%`);
-        }
+  if (search) {
+    query += " AND (productName LIKE ? OR productDescription LIKE ?)";
+    params.push(`%${search}%`, `%${search}%`);
+  }
 
-        const [rows] = await db.query(query, params);
-        return rows;
-    } catch (err) {
-        console.error("Service Error:", err);
-        throw err;
-    }
-}
+  if (minPrice !== undefined && minPrice !== "") {
+    query += " AND price >= ?";
+    params.push(Number(minPrice));
+  }
 
-export async function getProductById(id) {
-    const [rows] = await db.query(
-        "SELECT * FROM products WHERE productId = ?",
-        [id]
-    );
-    return rows[0];
+  if (maxPrice !== undefined && maxPrice !== "") {
+    query += " AND price <= ?";
+    params.push(Number(maxPrice));
+  }
+
+  // safe sorting (avoid SQL injection)
+  if (sort === "price") query += " ORDER BY price ASC";
+  else if (sort === "price_desc") query += " ORDER BY price DESC";
+  else query += " ORDER BY productName ASC";
+
+  const [rows] = await db.query(query, params);
+  return rows; // empty array is fine
 }
