@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    
+    <script src="/js/kitchen.js" defer></script>
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="icon" href="/images/logo.webp" type="image/webp">
 </head>
@@ -53,10 +53,10 @@
             <div class="filter-group">
                 <label for="category-filter">Category</label>
                 <select id="category-filter">
-                    <option value="">All</option>
-                    <option value="food-storage">Food Storage</option>
-                    <option value="cooking-tools">Cooking Tools</option>
-                    <option value="dining-serveware">Dining & Serveware</option>
+                    <option value="All">All</option> ```
+                    <option value="dining">Dining</option>
+                    <option value="Kitchen-Linens">Kitchen Tools</option>
+                    <option value="Cleaning-Supplies">Cleaning Supplies</option>
                     <option value="drinkware">Drinkware</option>
                 </select>
             </div>
@@ -64,10 +64,10 @@
             <div class="filter-group">
                 <label for="sort-filter">Sort</label>
                 <select id="sort-filter">
-                    <option value="featured">Featured</option>
-                    <option value="price-asc">Price: Low to High</option>
-                    <option value="price-desc">Price: High to Low</option>
-                </select>
+                <option value="">Featured</option>
+                <option value="price">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+            </select>
             </div>
 
             <button id="clear-filters" class="button ghost small">Clear</button>
@@ -101,6 +101,5 @@
         </div>
     </main>
 
-    <script src="/js/search.js"></script>
-</body>
+    <script src="/js/search.js"></script>ody>
 </html>

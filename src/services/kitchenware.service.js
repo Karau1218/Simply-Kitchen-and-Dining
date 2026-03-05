@@ -1,11 +1,11 @@
 import db from "../db.js";
 
 export async function getAllProducts({
-  category = "All",
+  category = "",
   search = "",
   minPrice,
   maxPrice,
-  sort
+  sort = "featured"
 } = {}) {
   let query = `
     SELECT productId, productName, productDescription, price, category, imageUrl
@@ -14,7 +14,7 @@ export async function getAllProducts({
   `;
   const params = [];
 
-  if (category && category !== "All") {
+  if (category) {
     query += " AND category = ?";
     params.push(category);
   }
@@ -34,7 +34,7 @@ export async function getAllProducts({
     params.push(Number(maxPrice));
   }
 
-  if (sort === "price") query += " ORDER BY price ASC";
+  if (sort === "price-asc") query += " ORDER BY price ASC";
   else if (sort === "price_desc") query += " ORDER BY price DESC";
   else query += " ORDER BY productName ASC";
 
