@@ -1,42 +1,68 @@
-// Grab the elements from your products.ejs
-const searchInput = document.getElementById('product-search');
-const categorySelect = document.getElementById('category-filter');
-const sortSelect = document.getElementById('sort-filter');
-const productsGrid = document.getElementById('products-grid'); // The ID of your products container
-const countSpan = document.getElementById('product-count');
+const searchInput = document.getElementById("product-search");
+const categorySelect = document.getElementById("category-filter");
+const sortSelect = document.getElementById("sort-filter");
+const clearButton = document.getElementById("clear-filters");
+const productsGrid = document.getElementById("products-grid");
+const countSpan = document.getElementById("product-count");
 
 async function updateFilters() {
-    const search = searchInput.value;
-    const category = categorySelect.value;
-    const sort = sortSelect.value;
+    try {
+        const params = new URLSearchParams({
+            search: searchInput.value.trim(),
+            category: categorySelect.value,
+            sort: sortSelect.value
+        });
 
-    // The REST call - Using the keys your controller expects
-    const response = await fetch(`/api/products?search=${search}&category=${category}&sort=${sort}`);
-    const products = await response.json();
+        const response = await fetch(`/api/products?${params.toString()}`);
 
-    // Update the "Showing X products" text
-    if (countSpan) countSpan.textContent = products.length;
+        if (!response.ok) {
+            throw new Error(`HTTP error ${response.status}`);
+        }
 
-    // Clear and rebuild the product grid
-    productsGrid.innerHTML = products.map(p => `
-        <article class="product-card">
-            <div class="product-img">
-                <img src="${p.imageUrl}" alt="${p.productName}">
-            </div>
-            <div class="product-info">
-                <h3 class="product-name">${p.productName}</h3>
-                <p class="product-desc">${p.productDescription}</p>
-                <p class="price">$${p.price}</p>
-                <div class="card-actions">
-                    <button class="button primary small">Add to Cart</button>
-                    <a href="/products/${p.productId}" class="details-link">View Details</a>
-                </div>
-            </div>
-        </article>
-    `).join('');
+        const products = await response.json();
+
+        countSpan.textContent = products.length;
+
+        if (products.length === 0) {
+            productsGrid.innerHTML = `<p>No products match your filters.</p>`;
+            return;
+        }
+
+        productsGrid.innerHTML = products.map(product => `
+    <article class="product-card">
+        <div class="product-img">
+          <img src="${product.imageUrl}" alt="${product.productName}">
+        </div>
+
+        <div class="product-info">
+          <h3 class="product-name">${product.productName}</h3>
+          <p class="product-category">${product.category}</p>
+          <p class="product-desc">${product.productDescription}</p>
+          <p class="price">$${product.price}</p>
+
+          <div class="card-actions">
+            <button class="button primary small">Add to Cart</button>
+            <a href="/products/${product.productId}" class="details-link">View Details</a>
+          </div>
+        </div>
+      </article>
+    `).join("");
+    } catch (error) {
+        console.error("Filter error:", error);
+        productsGrid.innerHTML = `<p>Sorry, something went wrong while loading products.</p>`;
+    }
 }
 
-// Add listeners so the filter runs automatically
-searchInput.addEventListener('input', updateFilters);
-categorySelect.addEventListener('change', updateFilters);
-sortSelect.addEventListener('change', updateFilters);
+searchInput.addEventListener("input", updateFilters);
+categorySelect.addEventListener("change", updateFilters);
+sortSelect.addEventListener("change", updateFilters);
+
+clearButton.addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    searchInput.value = "";
+    categorySelect.value = "All";
+    sortSelect.value = "";
+
+    await updateFilters();
+});

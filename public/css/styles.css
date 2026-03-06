@@ -370,6 +370,12 @@ body {
     font-weight: 800;
 }
 
+/* Best sellers */
+.best-seller-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
 
 /* Products */
 

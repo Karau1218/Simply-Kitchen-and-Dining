@@ -2,104 +2,97 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
     <title>Shop Products — Sustainably</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <script src="/js/kitchen.js" defer></script>
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="icon" href="/images/logo.webp" type="image/webp">
+    <%- include("partials/head") %>
+        <script src="/js/kitchen.js" defer></script>
 </head>
 
 <body>
 
-    <header class="topbar">
-        <nav class="nav container">
-            <a class="brand" href="/">
-                <img src="/images/logo.webp" id="logo" alt="logo">
-                <span class="brand-name">Simply Kitchenware & Dining</span>
-            </a>
+    <%- include("partials/header") %>
 
-            <div class="nav-links" aria-label="Primary navigation">
-                <a href="/products">Shop</a>
-                <a href="/#collections">Collections</a>
-                <a href="/#mission">Mission</a>
-                <a href="/#bestsellers">Best Sellers</a>
+        <main class="container section">
+            <div class="section-head">
+                <h1 class="section-title">Shop All Products</h1>
+                <p class="section-sub">Eco-friendly kitchen essentials for a cleaner home.</p>
             </div>
 
-            <div class="nav-actions">
-                <a class="nav-link" href="#login">Login</a>
-                <a class="button small" href="#register">Register</a>
-                <a class="icon-btn" href="#cart" aria-label="Cart">🛒</a>
-            </div>
-        </nav>
-    </header>
+            <section class="filter-bar">
+                <div class="filter-group">
+                    <label for="product-search">Search</label>
+                    <input type="text" id="product-search" placeholder="Search name or description..."
+                        value="<%= searchTerm || '' %>">
+                </div>
 
-    <main class="container section">
-        <div class="section-head">
-            <h1 class="section-title">Shop All Products</h1>
-            <p class="section-sub">Eco-friendly kitchen essentials for a cleaner home.</p>
-        </div>
+                <div class="filter-group">
+                    <label for="category-filter">Category</label>
+                    <select id="category-filter">
+                        <option value="All" <%=selectedCategory==="All" ? "selected" : "" %>>All</option>
+                        <option value="Kitchen Tools" <%=selectedCategory==="Kitchen Tools" ? "selected" : "" %>>Kitchen
+                            Tools</option>
+                        <option value="Food Storage" <%=selectedCategory==="Food Storage" ? "selected" : "" %>>Food
+                            Storage</option>
+                        <option value="Drinkware" <%=selectedCategory==="Drinkware" ? "selected" : "" %>>Drinkware
+                        </option>
+                        <option value="Kitchen Linens" <%=selectedCategory==="Kitchen Linens" ? "selected" : "" %>
+                            >Kitchen Linens</option>
+                        <option value="Cleaning Supplies" <%=selectedCategory==="Cleaning Supplies" ? "selected" : "" %>
+                            >Cleaning Supplies</option>
+                        <option value="Dining" <%=selectedCategory==="Dining" ? "selected" : "" %>>Dining</option>
+                    </select>
+                </div>
 
-        <section class="filter-bar">
-            <div class="filter-group">
-                <label for="product-search">Search</label>
-                <input type="text" id="product-search" placeholder="Search name or description...">
-            </div>
+                <div class="filter-group">
+                    <label for="sort-filter">Sort</label>
+                    <select id="sort-filter">
+                        <option value="" <%=selectedSort==="" ? "selected" : "" %>>Featured</option>
+                        <option value="price" <%=selectedSort==="price" ? "selected" : "" %>>Price: Low to High</option>
+                        <option value="price_desc" <%=selectedSort==="price_desc" ? "selected" : "" %>>Price: High to
+                            Low</option>
+                    </select>
+                </div>
 
-            <div class="filter-group">
-                <label for="category-filter">Category</label>
-                <select id="category-filter">
-                    <option value="All">All</option> ```
-                    <option value="dining">Dining</option>
-                    <option value="Kitchen-Linens">Kitchen Tools</option>
-                    <option value="Cleaning-Supplies">Cleaning Supplies</option>
-                    <option value="drinkware">Drinkware</option>
-                </select>
-            </div>
+                <button type="button" id="clear-filters" class="button ghost small">Clear</button>
 
-            <div class="filter-group">
-                <label for="sort-filter">Sort</label>
-                <select id="sort-filter">
-                <option value="">Featured</option>
-                <option value="price">Price: Low to High</option>
-                <option value="price_desc">Price: High to Low</option>
-            </select>
-            </div>
+                <div class="product-status">
+                    Showing <span id="product-count">
+                        <%= products.length %>
+                    </span> products
+                </div>
+            </section>
 
-            <button id="clear-filters" class="button ghost small">Clear</button>
+            <hr class="divider" style="margin: 2rem 0; opacity: 0.2;">
 
-            <div class="product-status">
-                Showing <span id="product-count"><%= products.length %></span> products
-            </div>
-        </section>
-
-        <hr class="divider" style="margin: 2rem 0; opacity: 0.2;">
-
-        <div class="products" id="products-grid">
-            <% products.forEach(product => { %>
-                <article class="product-card">
-                    <div class="product-img">
-                        <img src="<%= product.imageUrl %>" alt="<%= product.productName %>">
-                    </div>
-
-                    <div class="product-info">
-                        <h3 class="product-name"><%= product.productName %></h3>
-                        <p class="product-desc"><%= product.productDescription %></p>
-                        <p class="price">$<%= product.price %></p>
-
-                        <div class="card-actions">
-                            <button class="button primary small">Add to Cart</button>
-                            <a href="/products/<%= product.productId %>" class="details-link">View Details</a>
+            <div class="products" id="products-grid">
+                <% products.forEach(product=> { %>
+                    <article class="product-card">
+                        <div class="product-img">
+                            <img src="<%= product.imageUrl %>" alt="<%= product.productName %>">
                         </div>
-                    </div>
-                </article>
-            <% }) %>
-        </div>
-    </main>
 
-    <script src="/js/search.js"></script>ody>
+                        <div class="product-info">
+                            <h3 class="product-name">
+                                <%= product.productName %>
+                            </h3>
+                            <p class="product-category">
+                                <%= product.category %>
+                            </p>
+                            <p class="product-desc">
+                                <%= product.productDescription %>
+                            </p>
+                            <p class="price">$<%= product.price %>
+                            </p>
+
+                            <div class="card-actions">
+                                <button class="button primary small">Add to Cart</button>
+                                <a href="/products/<%= product.productId %>" class="details-link">View Details</a>
+                            </div>
+                        </div>
+                    </article>
+                    <% }) %>
+            </div>
+        </main>
+
+</body>
+
 </html>

@@ -1,8 +1,15 @@
-import { getAllProducts, getProductById } from "../services/kitchenware.service.js";
+import { getAllProducts, getProductById, getBestSellers } from "../services/kitchenware.service.js";
 
-export function showHome(req, res) {
-    return res.render("page");
+export async function showHome(req, res) {
+  try {
+    const bestSellers = await getBestSellers();
+    return res.render("page", { bestSellers });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Database error");
+  }
 }
+
 // ApI controller
 export async function getApiProducts(req, res) {
   try {
@@ -25,8 +32,22 @@ export async function getApiProducts(req, res) {
 
 export async function showProducts(req, res) {
   try {
-    const products = await getAllProducts(); // still works
-    return res.render("products", { products });
+    const { category, search, minPrice, maxPrice, sort } = req.query;
+
+    const products = await getAllProducts({
+      category,
+      search,
+      minPrice,
+      maxPrice,
+      sort
+    });
+
+    return res.render("products", {
+      products,
+      selectedCategory: category || "All",
+      selectedSort: sort || "",
+      searchTerm: search || ""
+    });
   } catch (err) {
     console.error(err);
     return res.status(500).send("Database error");
