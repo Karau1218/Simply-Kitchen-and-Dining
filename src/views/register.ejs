@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Create Account | Simply Kitchenware & Dining</title>
+    <%- include("partials/head") %>
+</head>
+
+<body>
+    <%- include("partials/header") %>
+
+        <main class="auth-page">
+            <section class="auth-layout container">
+                <div class="auth-brand">
+                    <p class="auth-eyebrow">Simply Kitchenware & Dining</p>
+                    <h2 class="auth-brand-title">Sustainable products for a cleaner kitchen.</h2>
+                    <p class="auth-brand-sub">
+                        Create an account to explore our curated collection of sustainable kitchen and dining essentials.
+                    </p>
+                </div>
+
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h1>Create your account</h1>
+                        <p class="auth-sub">Register to browse our full collection.</p>
+                    </div>
+
+                    <form action="/register" method="POST" class="auth-form">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input id="email" name="email" type="email" placeholder="you@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input id="password" name="password" type="password" minlength="8" placeholder="Create a password" required>
+                            <small>Minimum 8 characters</small>
+                        </div>
+
+                        <button type="submit" class="auth-submit">Create Account</button>
+                    </form>
+
+                    <p class="auth-switch">
+                        Already have an account? <a href="/login">Login</a>
+                    </p>
+                </div>
+            </section>
+        </main>
+</body>
+
+</html>

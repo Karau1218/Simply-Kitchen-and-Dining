@@ -1,11 +1,13 @@
-import { Router } from "express";
-import { showHome, showProducts, showProductDetail, getApiProducts } from "../controllers/kitchenware.controller.js";
+import { Router } from "express"
+import { showHome, showProducts, showProductDetail, getApiProducts, showRegister, showLogin } from "../controllers/kitchenware.controller.js"
 
-const router = Router();
+const router = Router()
 
-router.get("/", showHome);
-router.get("/products", showProducts);
-router.get("/api/products", getApiProducts);
-router.get("/products/:id", showProductDetail);
+router.get("/", showHome)
+router.get("/register", showRegister)
+router.get("/login", showLogin)
+router.get("/products", showProducts)
+router.get("/api/products", getApiProducts)
+router.get("/products/:id", showProductDetail)
 
-export default router;
+export default router

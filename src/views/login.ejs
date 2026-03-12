@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Login | Simply Kitchenware & Dining</title>
+    <%- include("partials/head") %>
+</head>
+
+<body>
+    <%- include("partials/header") %>
+
+        <main class="auth-page">
+            <section class="auth-layout container">
+                <div class="auth-brand">
+                    <p class="auth-eyebrow">Simply Kitchenware & Dining</p>
+                    <h2 class="auth-brand-title">Thoughtful kitchen essentials for everyday living.</h2>
+                    <p class="auth-brand-sub">
+                        Durable materials, minimal design, and products made to last for a cleaner, calmer home.
+                    </p>
+                </div>
+
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h1>Welcome back</h1>
+                        <p class="auth-sub">Login to browse our sustainable kitchen and dining collection.</p>
+                    </div>
+
+                    <form action="/login" method="POST" class="auth-form">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input id="email" name="email" type="email" placeholder="you@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input id="password" name="password" type="password" placeholder="Enter your password" required>
+                        </div>
+
+                        <button type="submit" class="auth-submit">Login</button>
+                    </form>
+
+                    <p class="auth-switch">
+                        Don’t have an account? <a href="/register">Create one</a>
+                    </p>
+                </div>
+            </section>
+        </main>
+</body>
+
+</html>
