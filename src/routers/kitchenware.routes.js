@@ -1,13 +1,28 @@
 import { Router } from "express"
-import { showHome, showProducts, showProductDetail, getApiProducts, showRegister, showLogin } from "../controllers/kitchenware.controller.js"
+import {
+ showHome, showProducts, showProductDetail, getApiProducts, showRegister, showLogin, loginUser,
+ logoutUser,
+ registerUser
+} from "../controllers/kitchenware.controller.js"
+
+import { requireAuthPage, requireAuthApi } from "../middleware/auth.middleware.js"
+
 
 const router = Router()
 
 router.get("/", showHome)
 router.get("/register", showRegister)
 router.get("/login", showLogin)
+
 router.get("/products", showProducts)
-router.get("/api/products", getApiProducts)
-router.get("/products/:id", showProductDetail)
+router.get("/api/products", requireAuthPage, getApiProducts)
+router.get("/products/:id", requireAuthPage, showProductDetail)
+
+// protected API
+router.get("/api/products", requireAuthApi, getApiProducts)
+
+router.post("/register", registerUser)
+router.post("/login", loginUser)
+router.post("/logout", logoutUser)
 
 export default router

@@ -13,9 +13,24 @@
         </div>
 
         <div class="nav-actions">
-            <a class="nav-link" href="/login">Login</a>
-            <a class="button small" href="/register">Register</a>
-            <a class="icon-btn" href="#cart" aria-label="Cart">🛒</a>
+
+            <% if (user) { %>
+
+                <!-- Logged in -->
+                <form action="/logout" method="POST" style="display:inline;">
+                    <button type="submit" class="button small">Logout</button>
+                </form>
+
+                <% } else { %>
+
+                    <!-- Not logged in -->
+                    <a class="nav-link" href="/login">Login</a>
+                    <a class="button small" href="/register">Register</a>
+
+                    <% } %>
+
+                        <a class="icon-btn" href="#cart" aria-label="Cart">🛒</a>
+
         </div>
     </nav>
 </header>

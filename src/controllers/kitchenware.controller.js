@@ -74,3 +74,25 @@ export function showRegister(req, res) {
 export function showLogin(req, res) {
   return res.render("login")
 }
+
+export function loginUser(req, res) {
+  req.session.user = {
+    email: req.body.email
+  }
+
+  return res.redirect("/products")
+}
+
+export function logoutUser(req, res) {
+  req.session.destroy(() => {
+    res.redirect("/login")
+  })
+}
+
+export function registerUser(req, res) {
+  req.session.user = {
+    email: req.body.email
+  }
+
+  return res.redirect("/products")
+}
