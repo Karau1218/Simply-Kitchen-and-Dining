@@ -28,8 +28,11 @@ async function updateFilters() {
             return;
         }
 
-        productsGrid.innerHTML = products.map(product => `
-    <article class="product-card">
+        productsGrid.innerHTML = products.map(product => {
+            const productId = product.productId ?? product.id
+
+            return `
+      <article class="product-card">
         <div class="product-img">
           <img src="${product.imageUrl}" alt="${product.productName}">
         </div>
@@ -41,12 +44,18 @@ async function updateFilters() {
           <p class="price">$${product.price}</p>
 
           <div class="card-actions">
-            <button class="button primary small">Add to Cart</button>
-            <a href="/products/${product.productId}" class="details-link">View Details</a>
+            <button
+              class="button primary small add-to-cart"
+              data-product-id="${productId}"
+            >
+              Add to Cart
+            </button>
+            <a href="/products/${productId}" class="details-link">View Details</a>
           </div>
         </div>
       </article>
-    `).join("");
+    `
+        }).join("")
     } catch (error) {
         console.error("Filter error:", error);
         productsGrid.innerHTML = `<p>Sorry, something went wrong while loading products.</p>`;

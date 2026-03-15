@@ -116,12 +116,18 @@ export async function loginUser(req, res) {
     }
 }
 
-
 export function logoutUser(req, res) {
 
 req.session.destroy((err) => {
         if (err) console.error("Logout error:", err);
         return res.redirect("/"); 
     });
+}
+
+export const showCart = (req, res) => {
+  res.render("cart", {
+    title: "Shopping Cart",
+    user: req.session.user || null
+  })
 }
 

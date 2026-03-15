@@ -17,12 +17,24 @@
     box-sizing: border-box;
 }
 
+html,
+body {
+    min-height: 100%;
+}
+
 body {
     margin: 0;
     font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     color: var(--ink);
-    background: radial-gradient(900px 700px at 15% 10%, rgba(136, 167, 146, .25), transparent 60%), radial-gradient(900px 700px at 85% 15%, rgba(205, 188, 166, .25), transparent 55%), var(--bg);
+    background:
+        radial-gradient(900px 700px at 15% 10%, rgba(136, 167, 146, .25), transparent 60%),
+        radial-gradient(900px 700px at 85% 15%, rgba(205, 188, 166, .25), transparent 55%),
+        var(--bg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
+
+
 
 #logo {
     height: 40px;
@@ -824,6 +836,30 @@ body {
     border-bottom-color: rgba(31, 42, 36, 0.35);
 }
 
+/* Adding to cart animation */
+.cart-bounce {
+    animation: cartBounce 0.4s ease;
+}
+
+@keyframes cartBounce {
+    0% {
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(1.25);
+    }
+
+    60% {
+        transform: scale(0.9);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Media Styling */
 @media (max-width: 900px) {
     .auth-layout {
         grid-template-columns: 1fr;

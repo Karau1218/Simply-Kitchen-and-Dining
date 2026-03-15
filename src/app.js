@@ -1,6 +1,7 @@
 import express from 'express'
 import session from 'express-session'
 import kitchenwareRoutes from "./routers/kitchenware.routes.js"
+import cartRouter from "./routers/cart.routes.js";
 
 //configure Express.js app
 const app = express()
@@ -32,6 +33,8 @@ app.use((req, res, next) => {
  res.locals.user = req.session.userId || null
  next()
 })
+
+app.use(cartRouter);
 
 //routers
 app.use("/", kitchenwareRoutes)

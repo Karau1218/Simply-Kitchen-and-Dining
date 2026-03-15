@@ -4,39 +4,42 @@
 <head>
     <title><%= product.productName %> — Sustainably</title>
     <%- include("partials/head") %>
+    <script src="/js/cart.js" defer></script>
 </head>
 
 <body>
-    <%- include("partials/header") %>   
+    <%- include("partials/header") %>
 
-    <main class="container section">
-        <div class="product-detail-layout">
-            <div class="product-image-large">
-                <img src="<%= product.imageUrl %>" alt="<%= product.productName %>">
-            </div>
-
-            <div class="product-info-heavy">
-                <p class="eyebrow">Eco-Friendly Essentials</p>
-                <span class="tag">
-                    <%= product.category %>
-                </span>
-                <h1>
-                    <%= product.productName %>
-                </h1>
-                <p class="price-large">$<%= product.price %>
-                </p>
-
-                <div class="description">
-                    <h3>Description</h3>
-                    <p>
-                        <%= product.productDescription %>
-                    </p>
+        <main class="container section">
+            <div class="product-detail-layout">
+                <div class="product-image-large">
+                    <img src="<%= product.imageUrl %>" alt="<%= product.productName %>">
                 </div>
 
-                <button class="button primary">Add to Cart</button>
+                <div class="product-info-heavy">
+                    <p class="eyebrow">Eco-Friendly Essentials</p>
+                    <span class="tag">
+                        <%= product.category %>
+                    </span>
+                    <h1>
+                        <%= product.productName %>
+                    </h1>
+                    <p class="price-large">$<%= product.price %>
+                    </p>
+
+                    <div class="description">
+                        <h3>Description</h3>
+                        <p>
+                            <%= product.productDescription %>
+                        </p>
+                    </div>
+
+                    <button class="button primary add-to-cart" data-product-id="<%= product.productId %>">
+                        Add to Cart
+                    </button>
+                </div>
             </div>
-        </div>
-    </main>
+        </main>
 </body>
 
 </html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Shopping Cart</title>
+    <%- include("partials/head") %>
+    <link rel="stylesheet" href="/css/cart.css">
+    <script src="/js/cart.js" defer></script>
+</head>
+<body>
+    <%- include("partials/header") %>
+
+    <main class="container section cart-page">
+        <div class="section-head">
+            <h1 class="section-title">Your Shopping Cart</h1>
+            <p class="section-sub">Review your selected items before checkout.</p>
+        </div>
+
+        <section id="cart-container">
+            <p id="cart-message">Loading cart...</p>
+
+            <div id="cart-items"></div>
+
+            <div id="cart-summary" style="display: none; margin-top: 2rem;">
+                <h3>Total Items: <span id="cart-total-items">0</span></h3>
+                <h3>Subtotal: $<span id="cart-subtotal">0.00</span></h3>
+                <button id="clear-cart-btn" class="button ghost small">Clear Cart</button>
+                <a href="/products" class="button small">Continue Shopping</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

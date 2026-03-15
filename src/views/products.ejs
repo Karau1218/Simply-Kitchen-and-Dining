@@ -5,6 +5,7 @@
     <title>Shop Products — Sustainably</title>
     <%- include("partials/head") %>
         <script src="/js/kitchen.js" defer></script>
+        <script src="/js/cart.js" defer></script>
 </head>
 
 <body>
@@ -84,7 +85,10 @@
                             </p>
 
                             <div class="card-actions">
-                                <button class="button primary small">Add to Cart</button>
+                                <button class="button primary small add-to-cart"
+                                    data-product-id="<%= product.productId %>">
+                                    Add to Cart
+                                </button>
                                 <a href="/products/<%= product.productId %>" class="details-link">View Details</a>
                             </div>
                         </div>
